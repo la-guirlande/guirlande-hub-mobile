@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:giurlande_hub_mobile/ui/pages/account_page.dart';
 import 'package:giurlande_hub_mobile/ui/pages/home_page.dart';
+import 'package:giurlande_hub_mobile/ui/pages/login_page.dart';
 import 'package:giurlande_hub_mobile/ui/pages/presets_page.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
@@ -18,7 +19,8 @@ class _WrapperState extends State<Wrapper> {
   static const List<Widget> _pageOptions = <Widget>[
     HomePage(),
     PresetsPage(),
-    AccountPage()
+    AccountPage(),
+    LoginPage()
   ];
 
   @override
@@ -48,6 +50,10 @@ class _WrapperState extends State<Wrapper> {
               icon: const Icon(Icons.account_circle),
               title: const Text("Compte"),
               selectedColor: Colors.redAccent[400]),
+          SalomonBottomBarItem(
+              icon: const Icon(Icons.login),
+              title: const Text("Connexion"),
+              selectedColor: Colors.purpleAccent[400]),
         ],
       ),
     );
