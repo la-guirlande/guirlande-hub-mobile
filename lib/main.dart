@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:giurlande_hub_mobile/ui/pages/home_page.dart';
+import 'package:giurlande_hub_mobile/ui/wrapper.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      home: const HomePage(),
+      home: const Wrapper(),
     );
   }
 }
