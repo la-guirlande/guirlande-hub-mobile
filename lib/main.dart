@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:giurlande_hub_mobile/ui/pages/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,10 +13,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Guirlande Hub Mobile',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
       ),
-      home: const Text('Guirlande Hub Mobile'),
+      home: const HomePage(),
     );
   }
 }
