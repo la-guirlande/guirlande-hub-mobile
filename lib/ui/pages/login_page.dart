@@ -90,6 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                         Container(
                           padding: const EdgeInsets.all(10),
                           child: const TextField(
+                            obscureText: true,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: "Mot de passe",
