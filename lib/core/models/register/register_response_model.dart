@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+RegisterResponseModel loginResponseModel(String response) =>
+    RegisterResponseModel.fromJson(jsonDecode(response));
+
 class RegisterResponseModel {
   RegisterResponseModel({
     required this.id,
@@ -7,7 +12,7 @@ class RegisterResponseModel {
   late final List<Links> links;
 
   RegisterResponseModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id = json['id'] != null ? json['id'] : null;
     links = List.from(json['links']).map((e) => Links.fromJson(e)).toList();
   }
 
