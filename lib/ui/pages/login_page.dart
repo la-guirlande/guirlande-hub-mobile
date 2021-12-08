@@ -9,9 +9,16 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  String? email;
+  String? password;
+
+  GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    final TextEditingController _usernameController = TextEditingController();
+    final TextEditingController _passwordController = TextEditingController();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -81,7 +88,8 @@ class _LoginPageState extends State<LoginPage> {
                               border: Border(
                                   bottom: BorderSide(color: Colors.grey))),
                           child: const TextField(
-                            decoration: InputDecoration(
+                            controller: _usernameController,
+                                decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: "Email",
                                 hintStyle: TextStyle(color: Colors.grey)),
