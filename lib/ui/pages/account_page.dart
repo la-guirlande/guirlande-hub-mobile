@@ -9,7 +9,7 @@ class AccountPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.purpleAccent,
-        elevation: 1,
+        elevation: 2,
         title: const Text("Account"),
       ),
       body: const AccountBody(),
