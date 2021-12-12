@@ -1,14 +1,14 @@
 import 'dart:convert';
 
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:giurlande_hub_mobile/core/config/config.dart';
 import 'package:giurlande_hub_mobile/core/models/login/login_request_model.dart';
 import 'package:giurlande_hub_mobile/core/models/login/login_response_model.dart';
 import 'package:http/http.dart' as http;
 
+import '../../main.dart';
+
 class APIService {
   static var client = http.Client();
-  static var storage = FlutterSecureStorage();
 
   static Future<String> login(LoginRequestModel loginRequestModel) async {
     Map<String, String> requestHeaders = {'Content-Type': 'application/json'};
@@ -16,28 +16,32 @@ class APIService {
     var url = Uri.http(Config.apiUrl, Config.refreshTokenAPI);
     var response = await client.post(url,
         headers: requestHeaders, body: jsonEncode(loginRequestModel.toJson()));
-
+    print(response.statusCode);
     if (response.statusCode == 200) {
-    LoginResponseModel responseJson = loginResponseModel(response.body);
-      storage.write(key: 'accessToken', value:responseJson.accessToken );
-      storage.write(key: 'refreshToken', value:responseJson.refreshToken );
-      return responseJson.accessToken;
+      LoginResponseModel responseJson = loginResponseModel(response.body);
+      storage.write(key: 'accessToken', value: responseJson.accessToken);
+      storage.write(key: 'refreshToken', value: responseJson.refreshToken);
+      var accessToken = responseJson.accessToken;
+      return accessToken;
     } else {
-      return "Erreur login bg";
+      return "erreur bg";
     }
   }
 
-  // static Future<String> getUserInfo(LoginRequestModel loginRequestModel) async {
-  //   Map<String, String> requestHeaders = {'Content-Type': 'application/json'};
+  static Future<bool> togglePresets() async {
+    var accessToken = storage.read(key: 'accessToken');
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken'
+    };
 
-  //   var url = Uri.http(Config.apiUrl, Config.refreshTokenAPI);
-  //   var response = await client.post(url,
-  //       headers: requestHeaders, body: jsonEncode(loginRequestModel.toJson()));
+    var url = Uri.http(Config.apiUrl, Config.togglePresets);
+    var response = await client.post(url, headers: requestHeaders, body: "");
 
-  //   if (response.statusCode == 200) {
-  //     storage.write(key: 'accessToken', value: response.body);
-  //   } else {
-  //     return "Erreur login bg";
-  //   }
-  // }
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

@@ -27,12 +27,6 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void displayDialog(context, title, text) => showDialog(
-        context: context,
-        builder: (context) =>
-            AlertDialog(title: Text(title), content: Text(text)),
-      );
-
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -149,12 +143,15 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () async {
                       var email = emailController.text;
                       var password = passwordController.text;
-                      var credentials = LoginRequestModel(email: email, password: password);
+                      var credentials =
+                          LoginRequestModel(email: email, password: password);
+                      print(credentials.toJson());
 
-                      var result = APIService.login(credentials);
-                        displayDialog(context, "Access Token",
-                            result);
-                      
+                      var responseJwt = await APIService.login(credentials)
+                          .then((response) => {
+                                if (response != null) {print(response)}
+                              });
+                      print(responseJwt.toString());
                     },
                     child: const Center(
                       heightFactor: 2,

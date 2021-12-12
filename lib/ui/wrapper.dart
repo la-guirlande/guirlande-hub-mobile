@@ -19,8 +19,7 @@ class _WrapperState extends State<Wrapper> {
   static const List<Widget> _pageOptions = <Widget>[
     HomePage(),
     PresetsPage(),
-    AccountPage(),
-    LoginPage()
+    AccountPage()
   ];
 
   @override
@@ -50,10 +49,6 @@ class _WrapperState extends State<Wrapper> {
               icon: const Icon(Icons.account_circle),
               title: const Text("Compte"),
               selectedColor: Colors.redAccent[400]),
-          SalomonBottomBarItem(
-              icon: const Icon(Icons.login),
-              title: const Text("Connexion"),
-              selectedColor: Colors.purpleAccent[400]),
         ],
       ),
     );
