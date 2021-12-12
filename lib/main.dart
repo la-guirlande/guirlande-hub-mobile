@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:giurlande_hub_mobile/ui/pages/home_page.dart';
 import 'package:giurlande_hub_mobile/ui/pages/login_page.dart';
 import 'package:giurlande_hub_mobile/ui/wrapper.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -30,19 +31,23 @@ class MyApp extends StatelessWidget {
       home: FutureBuilder(
         future: getAccessToken,
         builder: (context, snapshot) {
-          if (!snapshot.hasData) return CircularProgressIndicator();
+          if (!snapshot.hasData) return const CircularProgressIndicator();
           if (snapshot.data != "") {
             var str = snapshot.data;
             if (str != "") {
-              return Wrapper();
+              return const Wrapper();
             } else {
-              return LoginPage();
+              return const LoginPage();
             }
           } else {
-            return LoginPage();
+            return const LoginPage();
           }
         },
       ),
+      routes: {
+        '/login': (context) => const LoginPage(),
+        '/home': (context) => const Wrapper()
+      },
     );
   }
 }

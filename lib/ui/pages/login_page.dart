@@ -145,13 +145,15 @@ class _LoginPageState extends State<LoginPage> {
                       var password = passwordController.text;
                       var credentials =
                           LoginRequestModel(email: email, password: password);
-                      print(credentials.toJson());
 
                       var responseJwt = await APIService.login(credentials)
-                          .then((response) => {
-                                if (response != null) {print(response)}
+                          .then((responseJwt) => {
+                                if (responseJwt != null)
+                                  {
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context, '/home', (route) => false)
+                                  }
                               });
-                      print(responseJwt.toString());
                     },
                     child: const Center(
                       heightFactor: 2,
