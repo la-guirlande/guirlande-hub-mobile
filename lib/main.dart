@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:giurlande_hub_mobile/ui/pages/home_page.dart';
+import 'package:giurlande_hub_mobile/ui/pages/login_page.dart';
 import 'package:giurlande_hub_mobile/ui/wrapper.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+final storage = FlutterSecureStorage();
 
 void main() {
   runApp(const MyApp());
@@ -7,6 +12,12 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  Future<String> get getAccessToken async {
+    var accessToken = await storage.read(key: "accessToken");
+    if (accessToken == null) return "";
+    return accessToken;
+  }
 
   // This widget is the root of your application.
   @override
@@ -17,7 +28,26 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      home: const Wrapper(),
+      home: FutureBuilder(
+        future: getAccessToken,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) return const CircularProgressIndicator();
+          if (snapshot.data != "") {
+            var str = snapshot.data;
+            if (str != "") {
+              return const Wrapper();
+            } else {
+              return const LoginPage();
+            }
+          } else {
+            return const LoginPage();
+          }
+        },
+      ),
+      routes: {
+        '/login': (context) => const LoginPage(),
+        '/home': (context) => const Wrapper()
+      },
     );
   }
 }

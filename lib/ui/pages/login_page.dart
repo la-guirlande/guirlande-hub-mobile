@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:giurlande_hub_mobile/core/config/config.dart';
+import 'package:giurlande_hub_mobile/core/models/login/login_request_model.dart';
+import 'package:giurlande_hub_mobile/core/services/api_service.dart';
+import 'package:giurlande_hub_mobile/main.dart';
 import 'package:giurlande_hub_mobile/ui/widgets/fade_animation.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'dart:convert' show json, base64, ascii;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -9,9 +16,22 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    var email = "";
+    var password = "";
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -80,8 +100,9 @@ class _LoginPageState extends State<LoginPage> {
                           decoration: const BoxDecoration(
                               border: Border(
                                   bottom: BorderSide(color: Colors.grey))),
-                          child: const TextField(
-                            decoration: InputDecoration(
+                          child: TextField(
+                            controller: emailController,
+                            decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 hintText: "Email",
                                 hintStyle: TextStyle(color: Colors.grey)),
@@ -89,9 +110,11 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         Container(
                           padding: const EdgeInsets.all(10),
-                          child: const TextField(
+                          child: TextField(
+                            controller: passwordController,
                             obscureText: true,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
+
                                 border: InputBorder.none,
                                 hintText: "Mot de passe",
                                 hintStyle: TextStyle(color: Colors.grey)),
@@ -111,14 +134,30 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(
                     height: 30,
                   ),
-                  Container(
-                    height: 50,
-                    margin: const EdgeInsets.symmetric(horizontal: 60),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      color: const Color.fromRGBO(49, 39, 79, 1),
-                    ),
+                  ElevatedButton(
+                    // height: 50,
+                    // margin: const EdgeInsets.symmetric(horizontal: 60),
+                    // decoration: BoxDecoration(
+                    //   borderRadius: BorderRadius.circular(50),
+                    //   color: const Color.fromRGBO(49, 39, 79, 1),
+                    // ),
+                    onPressed: () async {
+                      var email = emailController.text;
+                      var password = passwordController.text;
+                      var credentials =
+                          LoginRequestModel(email: email, password: password);
+
+                      var responseJwt = await APIService.login(credentials)
+                          .then((responseJwt) => {
+                                if (responseJwt != null)
+                                  {
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context, '/home', (route) => false)
+                                  }
+                              });
+                    },
                     child: const Center(
+                      heightFactor: 2,
                       child: Text(
                         "Se connecter",
                         style: TextStyle(color: Colors.white),
