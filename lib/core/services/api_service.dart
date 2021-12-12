@@ -18,8 +18,10 @@ class APIService {
         headers: requestHeaders, body: jsonEncode(loginRequestModel.toJson()));
 
     if (response.statusCode == 200) {
-      storage.write(key: 'accessToken', value: response.body);
-      return response.body;
+    LoginResponseModel responseJson = loginResponseModel(response.body);
+      storage.write(key: 'accessToken', value:responseJson.accessToken );
+      storage.write(key: 'refreshToken', value:responseJson.refreshToken );
+      return responseJson.accessToken;
     } else {
       return "Erreur login bg";
     }
