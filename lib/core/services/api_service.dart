@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:giurlande_hub_mobile/core/config/config.dart';
 import 'package:giurlande_hub_mobile/core/models/login/login_request_model.dart';
 import 'package:giurlande_hub_mobile/core/models/login/login_response_model.dart';
@@ -28,8 +29,13 @@ class APIService {
     }
   }
 
+  static Future<void> disconnect(context) async {
+    storage.delete(key: "accessToken");
+    Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+  }
+
   static Future<bool> togglePresets() async {
-    var accessToken = storage.read(key: 'accessToken');
+    var accessToken = await storage.read(key: 'accessToken');
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $accessToken'
