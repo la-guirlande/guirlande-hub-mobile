@@ -114,6 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                             controller: passwordController,
                             obscureText: true,
                             decoration: const InputDecoration(
+
                                 border: InputBorder.none,
                                 hintText: "Mot de passe",
                                 hintStyle: TextStyle(color: Colors.grey)),
