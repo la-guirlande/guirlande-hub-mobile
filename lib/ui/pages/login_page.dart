@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(
                         color: Color.fromRGBO(49, 39, 79, 1),
                         fontWeight: FontWeight.bold,
-                        fontSize: 30),
+                        fontSize: 32),
                   ),
                   const SizedBox(
                     height: 30,
@@ -149,12 +149,11 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () async {
                       var email = emailController.text;
                       var password = passwordController.text;
-                      var credentials = LoginRequestModel(email: email, password: password);
+                      var credentials =
+                          LoginRequestModel(email: email, password: password);
 
                       var result = APIService.login(credentials);
-                        displayDialog(context, "Access Token",
-                            result);
-                      
+                      displayDialog(context, "Access Token", result);
                     },
                     child: const Center(
                       heightFactor: 2,
